@@ -10,8 +10,7 @@
 
 namespace hanja {
 
-std::map<std::string, std::vector<std::size_t>> find_match(
-    const std::string &input);
+std::string find_match(const std::string &input);
 
 }  // namespace hanja
 

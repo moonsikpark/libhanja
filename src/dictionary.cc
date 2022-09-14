@@ -12,6 +12,7 @@ HanjaDictionary load(const std::string& file_path) {
   std::ifstream file(file_path);
 
   // TODO: enable use of comment characters.
+  // TODO: specify format.
 
   if (file.is_open()) {
     std::string line{""};

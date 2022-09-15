@@ -1,8 +1,7 @@
 // Copyright (c) 2022 ESTsoft Corp. All rights reserved.
-#include "hanja.h"
+#include "convert.h"
 
 #include "dictionary.h"
-#include "scoped_timer.h"
 #include "step/suffix_tree.hpp"
 
 namespace hanja {

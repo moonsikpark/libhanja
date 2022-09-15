@@ -1,9 +1,7 @@
 // Copyright (c) 2022 ESTsoft Corp. All rights reserved.
-#ifndef HANJA_H_
-#define HANJA_H_
+#ifndef CONVERT_H_
+#define CONVERT_H_
 
-#include <cstddef>
-#include <map>
 #include <string>
 #include <vector>
 
@@ -36,4 +34,4 @@ class Convert {
 }  // namespace convert
 }  // namespace hanja
 
-#endif  // HANJA_H_
+#endif  // CONVERT_H_

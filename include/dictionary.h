@@ -23,6 +23,8 @@ class Dictionary {
 
   inline const std::vector<std::string>& keys() const { return m_keys; }
 
+  inline const std::size_t length() const { return m_keys.size(); }
+
   // TODO: handle exception when querying non-existant keys
   inline const std::string& query(const std::string& key) const {
     return m_data.at(key);

@@ -13,10 +13,17 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 include_directories("include")
 include_directories("dependencies")
 
+add_subdirectory("dependencies/pybind11")
+
 set(SOURCES
-	src/hanja.cc
+	src/convert.cc
         src/types.cc
         src/dictionary.cc
 )
 
 add_executable(hanja src/main.cc ${SOURCES})
+
+pybind11_add_module(pyhanja src/pyhanja.cc ${SOURCES})
+
+target_compile_definitions(pyhanja
+                           PRIVATE VERSION_INFO=${EXAMPLE_VERSION_INFO})

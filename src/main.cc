@@ -2,10 +2,9 @@
 #include <iostream>
 #include <map>
 
+#include "convert.h"
 #include "dictionary.h"
-#include "hanja.h"
 #include "scoped_timer.h"
-#include "types.h"
 
 int main() {
   // todo:

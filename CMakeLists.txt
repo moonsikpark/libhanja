@@ -15,6 +15,7 @@ include_directories("dependencies")
 
 set(SOURCES
 	src/hanja.cc
+        src/types.cc
         src/dictionary.cc
 )
 

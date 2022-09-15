@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include "types.h"
+
 namespace hanja {
 namespace dictionary {
 

@@ -7,11 +7,11 @@
 namespace hanja {
 namespace dictionary {
 
-Dictionary::Dictionary(const std::string& dictionary_path) {
+Dictionary::Dictionary(const std::string& dictionary_path) noexcept {
   this->init(dictionary_path);
 }
 
-void Dictionary::init(const std::string& dictionary_path) {
+void Dictionary::init(const std::string& dictionary_path) noexcept {
   std::ifstream fstream;
 
   // Raise exceptions on failure.

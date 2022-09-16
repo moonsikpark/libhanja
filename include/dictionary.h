@@ -19,7 +19,7 @@ class Dictionary {
   Dictionary() = delete;
   Dictionary(const Dictionary&) = delete;
   Dictionary& operator=(const Dictionary&) = delete;
-  Dictionary(const std::string& dictionary_path);
+  Dictionary(const std::string& dictionary_path) noexcept;
 
   inline const std::vector<std::string>& keys() const { return m_keys; }
 
@@ -31,7 +31,7 @@ class Dictionary {
   }
 
  private:
-  void init(const std::string& dictionary_path);
+  void init(const std::string& dictionary_path) noexcept;
   std::unordered_map<std::string, std::string> m_data;
   std::vector<std::string> m_keys;
 };

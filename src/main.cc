@@ -21,8 +21,7 @@ int main() {
     std::getline(std::cin, input);
     ScopedTimer timer;
 
-    std::string match =
-        hanja::convert::Convert(input, dict).to_korean_with_hanja("<", ">");
+    std::string match = hanja::convert::Convert(input, dict).to_korean();
 
     std::cout << match << std::endl;
     std::cout << timer.elapsed().count() << " msec elapsed." << std::endl;

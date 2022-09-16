@@ -10,12 +10,14 @@
 
 namespace hanja {
 namespace convert {
+
 class Convert {
  public:
   Convert() = delete;
   Convert(const Convert&) = delete;
   Convert& operator=(const Convert&) = delete;
-  Convert(const std::string& input, const dictionary::Dictionary& dict);
+  Convert(const std::string& input,
+          const dictionary::Dictionary& dict) noexcept;
 
   const std::string to_korean() const;
 
@@ -26,9 +28,11 @@ class Convert {
   inline const std::string input() const { return m_input; }
 
  private:
-  void find_match(const dictionary::Dictionary& dict);
+  void find_match(const dictionary::Dictionary& dict) noexcept;
   const std::string m_input;
   std::vector<types::Match> m_match;
+  std::vector<bool> m_match_changed;
+  std::vector<types::MatchPosition> m_match_pos;
 };
 
 }  // namespace convert

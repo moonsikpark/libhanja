@@ -2,6 +2,7 @@
 #ifndef TYPES_H_
 #define TYPES_H_
 
+#include <cstddef>
 #include <string>
 #include <vector>
 
@@ -33,6 +34,29 @@ class Match {
   std::string m_key;
   std::string m_value;
   std::vector<std::size_t> m_pos;
+};
+
+class MatchPosition {
+ public:
+  MatchPosition() = delete;
+  MatchPosition(const MatchPosition&) = delete;
+  MatchPosition& operator=(const MatchPosition&) = delete;
+  MatchPosition(MatchPosition&& p) noexcept = default;
+  MatchPosition& operator=(MatchPosition&& p) = default;
+
+  MatchPosition(const std::size_t pos, const std::string& value);
+
+  inline const std::size_t get_pos() const { return m_pos; }
+
+  inline const std::string& get_value() const { return m_value; }
+
+  inline auto operator<=>(const MatchPosition& other) const {
+    return this->get_pos() <=> other.get_pos();
+  }
+
+ private:
+  std::string m_value;
+  std::size_t m_pos;
 };
 
 }  // namespace types

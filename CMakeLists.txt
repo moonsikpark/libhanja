@@ -13,8 +13,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 include_directories("include")
 include_directories("dependencies")
 
-find_package(pybind11 CONFIG REQUIRED)
-find_package(Python3 REQUIRED)
+IF (WIN32)
+        find_package(pybind11 CONFIG REQUIRED)
+        find_package(Python3 REQUIRED)
+ELSE()
+        add_subdirectory("dependencies/pybind11")
+ENDIF()
 
 set(SOURCES
 	src/convert.cc

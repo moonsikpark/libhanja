@@ -21,6 +21,8 @@ set(SOURCES
         src/dictionary.cc
 )
 
+find_package(pybind11 CONFIG REQUIRED)
+
 add_executable(hanja src/main.cc ${SOURCES})
 
 pybind11_add_module(pyhanja src/pyhanja.cc ${SOURCES})

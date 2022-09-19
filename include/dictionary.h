@@ -19,21 +19,21 @@ class Dictionary {
   Dictionary() = delete;
   Dictionary(const Dictionary&) = delete;
   Dictionary& operator=(const Dictionary&) = delete;
-  Dictionary(const std::string& dictionary_path) noexcept;
+  Dictionary(const compat::string& dictionary_path) noexcept;
 
-  inline const std::vector<std::string>& keys() const { return m_keys; }
+  inline const std::vector<compat::string>& keys() const { return m_keys; }
 
   inline const std::size_t length() const { return m_keys.size(); }
 
   // TODO: handle exception when querying non-existant keys
-  inline const std::string& query(const std::string& key) const {
+  inline const compat::string& query(const compat::string& key) const {
     return m_data.at(key);
   }
 
  private:
   void init(const std::string& dictionary_path) noexcept;
-  std::unordered_map<std::string, std::string> m_data;
-  std::vector<std::string> m_keys;
+  std::unordered_map<compat::string, compat::string> m_data;
+  std::vector<compat::string> m_keys;
 };
 
 }  // namespace dictionary

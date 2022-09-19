@@ -7,12 +7,12 @@
 namespace hanja {
 namespace dictionary {
 
-Dictionary::Dictionary(const std::string& dictionary_path) noexcept {
+Dictionary::Dictionary(const compat::string& dictionary_path) noexcept {
   this->init(dictionary_path);
 }
 
-void Dictionary::init(const std::string& dictionary_path) noexcept {
-  std::ifstream fstream;
+void Dictionary::init(const compat::string& dictionary_path) noexcept {
+  compat::ifstream fstream;
 
   // Raise exceptions on failure.
   // fstream.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -20,16 +20,16 @@ void Dictionary::init(const std::string& dictionary_path) noexcept {
   // TODO: Handle exceptions.
   fstream.open(dictionary_path);
 
-  std::string line;
+  compat::string line;
 
   while (std::getline(fstream, line)) {
-    std::string key, value;
+    compat::string key, value;
     // Skip comments or lines starting with whitespace.
     if (line[0] == kDictionaryComment && line[0] == ' ') {
       continue;
     }
 
-    std::stringstream ss{line};
+    compat::stringstream ss{line};
 
     getline(ss, value, kDictionaryDelimiter);
     getline(ss, key, kDictionaryDelimiter);

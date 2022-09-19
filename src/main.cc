@@ -5,6 +5,7 @@
 #include "convert.h"
 #include "dictionary.h"
 #include "scoped_timer.h"
+#include "types.h"
 
 int main() {
   // todo:
@@ -16,15 +17,24 @@ int main() {
 
   hanja::dictionary::Dictionary dict("/root/libhanja/build/hanja.txt");
 
-  std::string input;
+  hanja::compat::string input;
   while (true) {
+#ifdef _WIN32
+    std::getline(std::wcin, input);
+#else
     std::getline(std::cin, input);
+#endif
     ScopedTimer timer;
 
-    std::string match = hanja::convert::Convert(input, dict).to_korean();
-
+    hanja::compat::string match =
+        hanja::convert::Convert(input, dict).to_korean();
+#ifdef _WIN32
+    std::wcout << match << std::endl;
+    std::wcout << timer.elapsed().count() << " msec elapsed." << std::endl;
+#else
     std::cout << match << std::endl;
     std::cout << timer.elapsed().count() << " msec elapsed." << std::endl;
+#endif
   }
 
   return 0;

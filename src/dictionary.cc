@@ -34,12 +34,12 @@ void Dictionary::init(const compat::string& dictionary_path) noexcept {
 
     compat::stringstream ss{line};
 
-    getline(ss, value, (compat::char_t) kDictionaryDelimiter);
-    getline(ss, key, (compat::char_t) kDictionaryDelimiter);
+    getline(ss, value, (compat::char_t)kDictionaryDelimiter);
+    getline(ss, key, (compat::char_t)kDictionaryDelimiter);
 
-    if (!key.empty()){
-        m_keys.emplace_back(key);
-        m_data.emplace(key, value);
+    if (!key.empty()) {
+      m_keys.emplace_back(key);
+      m_data.emplace(key, value);
     }
   }
 }

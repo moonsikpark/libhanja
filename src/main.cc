@@ -3,8 +3,8 @@
 #include <map>
 
 #ifdef _WIN32
-#include <io.h>
 #include <fcntl.h>
+#include <io.h>
 #endif
 
 #include "convert.h"
@@ -26,7 +26,8 @@ int main() {
   if (!ret) {
     std::cerr << "Failed to _setmode()." << std::endl;
   }
-  hanja::compat::string path = L"C:\\Users\\moonsik.park_estsoft\\Desktop\\hanja.txt";
+  hanja::compat::string path =
+      L"C:\\Users\\moonsik.park_estsoft\\Desktop\\hanja.txt";
 #else
   hanja::compat::string path = "/root/libhanja/build/hanja.txt";
 #endif
@@ -35,7 +36,6 @@ int main() {
 
   hanja::compat::string input;
   while (true) {
-
 #ifdef _WIN32
     std::getline(std::wcin, input);
 #else

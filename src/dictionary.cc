@@ -12,6 +12,9 @@ Dictionary::Dictionary(const compat::string& dictionary_path) noexcept {
 }
 
 void Dictionary::init(const compat::string& dictionary_path) noexcept {
+#ifdef _WIN32
+  std::locale::global(std::locale(".UTF-8"));
+#endif
   compat::ifstream fstream;
 
   // Raise exceptions on failure.
@@ -31,11 +34,13 @@ void Dictionary::init(const compat::string& dictionary_path) noexcept {
 
     compat::stringstream ss{line};
 
-    getline(ss, value, kDictionaryDelimiter);
-    getline(ss, key, kDictionaryDelimiter);
+    getline(ss, value, (compat::char_t) kDictionaryDelimiter);
+    getline(ss, key, (compat::char_t) kDictionaryDelimiter);
 
-    m_keys.emplace_back(key);
-    m_data.emplace(key, value);
+    if (!key.empty()){
+        m_keys.emplace_back(key);
+        m_data.emplace(key, value);
+    }
   }
 }
 

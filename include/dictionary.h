@@ -31,7 +31,7 @@ class Dictionary {
   }
 
  private:
-  void init(const std::string& dictionary_path) noexcept;
+  void init(const compat::string& dictionary_path) noexcept;
   std::unordered_map<compat::string, compat::string> m_data;
   std::vector<compat::string> m_keys;
 };

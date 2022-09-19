@@ -16,10 +16,12 @@ namespace compat {
 using string = std::wstring;
 using ifstream = std::wifstream;
 using stringstream = std::wstringstream;
+using char_t = wchar_t;
 #else
 using string = std::string;
 using ifstream = std::ifstream;
 using stringstream = std::stringstream;
+using char_t = char;
 #endif
 }  // namespace compat
 

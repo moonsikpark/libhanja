@@ -17,7 +17,7 @@ Convert::Convert(const compat::string &input,
 
 void Convert::find_match(const dictionary::Dictionary &dict) noexcept {
   // Build a suffix tree.
-  step::suffix_tree tree;
+  step::suffix_tree<compat::char_t> tree;
   std::copy(m_input.begin(), m_input.end(), std::back_inserter(tree));
 
   // Find all matching words in a dictionary and save the position.
@@ -52,7 +52,6 @@ void Convert::find_match(const dictionary::Dictionary &dict) noexcept {
           break;
         }
       }
-
       // Convert the words if there are no overlap.
       if (!overlap) {
         auto value = match.get_value();

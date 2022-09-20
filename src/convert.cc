@@ -21,11 +21,19 @@ void Convert::find_match(const dictionary::Dictionary &dict) noexcept {
   std::copy(m_input.begin(), m_input.end(), std::back_inserter(tree));
 
   // Find all matching words in a dictionary and save the position.
+
+  /* HACK: This method does not store all positions for a given word. For
+   * example, if the word is "banana" and the key is "na", while it should
+   * return position 3 and 5, it returns only the position 3.
+   *
+   * To overcome this limitation, we should not rely on the position found here.
+   * Instead, we should look up the key in the sentence manually.
+   */
   for (const auto &key : dict.keys()) {
     std::vector<std::size_t> results;
     tree.find_all(key, std::back_inserter(results));
     if (results.size() > 0) {
-      m_match.emplace_back(key, dict.query(key), results);
+      m_match.emplace_back(key, dict.query(key));
     }
   }
 
@@ -42,27 +50,26 @@ void Convert::find_match(const dictionary::Dictionary &dict) noexcept {
   std::size_t current_pos = 0;
 
   for (const auto &match : m_match) {
-    for (const auto &position : match.get_pos()) {
-      // Check if there's an overlap with already changed indexes.
+    auto key = match.get_key();
+
+    compat::string::size_type pos = 0;
+    while ((pos = m_input.find(key, pos)) != compat::string::npos) {
       bool overlap = false;
-      for (std::size_t index = position;
-           index < position + match.get_key().length(); index++) {
-        if (m_match_changed[index]) {
+      for (std::size_t idx = pos; idx < pos + key.length(); idx++) {
+        if (m_match_changed[idx]) {
           overlap = true;
           break;
         }
       }
-      // Convert the words if there are no overlap.
       if (!overlap) {
-        auto value = match.get_value();
-        m_match_pos.emplace_back(position, match.get_value());
-
         // Write the positions we changed to the changed vector.
-        for (std::size_t index = position;
-             index < position + match.get_key().length(); index++) {
-          m_match_changed[index] = true;
+        for (std::size_t idx = pos; idx < pos + key.length(); idx++) {
+          m_match_changed[idx] = true;
         }
+
+        m_match_pos.push_back(match.to_match_position(pos));
       }
+      pos += key.size();
     }
   }
 
@@ -72,40 +79,42 @@ void Convert::find_match(const dictionary::Dictionary &dict) noexcept {
 }
 
 const compat::string Convert::to_korean() const {
-  compat::string output{m_input};
-
-  for (const auto &match_position : m_match_pos) {
-    output.replace(match_position.get_pos(),
-                   match_position.get_value().length(),
-                   match_position.get_value());
+  if (m_match_pos.size() == 0) {
+    return m_input;
   }
 
-  return output;
+  compat::stringstream ss;
+  std::size_t current_pos = 0;
+  for (const auto &match_position : m_match_pos) {
+    ss << m_input.substr(current_pos, match_position.get_pos() - current_pos);
+    ss << match_position.get_value();
+    current_pos = match_position.get_end_pos_original();
+  }
+
+  ss << m_input.substr(current_pos, m_input.length() - current_pos);
+  return ss.str();
 }
 
 const compat::string Convert::to_korean_with_hanja(
     const compat::string &delimiter_start,
     const compat::string &delimiter_end) const {
-  compat::string output{m_input};
-
-  std::size_t added_index = 0;
-
-  for (const auto &match_position : m_match_pos) {
-    std::size_t current_index = match_position.get_pos() + added_index +
-                                match_position.get_value().length();
-    output.insert(current_index, delimiter_start);
-
-    current_index += delimiter_start.length();
-    output.insert(current_index, match_position.get_value());
-
-    current_index += match_position.get_value().length();
-    output.insert(current_index, delimiter_end);
-
-    added_index += match_position.get_value().length() +
-                   delimiter_start.length() + delimiter_end.length();
+  if (m_match_pos.size() == 0) {
+    return m_input;
   }
 
-  return output;
+  compat::stringstream ss;
+  std::size_t current_pos = 0;
+  for (const auto &match_position : m_match_pos) {
+    ss << m_input.substr(current_pos, match_position.get_pos() - current_pos);
+    ss << match_position.get_value();
+    ss << delimiter_start;
+    ss << match_position.get_key();
+    ss << delimiter_end;
+    current_pos = match_position.get_end_pos_original();
+  }
+
+  ss << m_input.substr(current_pos, m_input.length() - current_pos);
+  return ss.str();
 }
 
 }  // namespace convert

@@ -45,7 +45,7 @@ int main() {
     ScopedTimer timer;
 
     hanja::compat::string match =
-        hanja::convert::Convert(input, dict).to_korean();
+        hanja::convert::Convert(input, dict).to_korean_with_hanja("<", ">");
 
 #ifdef _WIN32
     std::wcout << match << std::endl;

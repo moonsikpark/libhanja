@@ -9,7 +9,7 @@
 namespace hanja {
 namespace convert {
 
-Convert::Convert(const std::string &input,
+Convert::Convert(const compat::string &input,
                  const dictionary::Dictionary &dict) noexcept
     : m_input(input), m_match_changed(input.length(), false) {
   find_match(dict);
@@ -17,7 +17,7 @@ Convert::Convert(const std::string &input,
 
 void Convert::find_match(const dictionary::Dictionary &dict) noexcept {
   // Build a suffix tree.
-  step::suffix_tree tree;
+  step::suffix_tree<compat::char_t> tree;
   std::copy(m_input.begin(), m_input.end(), std::back_inserter(tree));
 
   // Find all matching words in a dictionary and save the position.
@@ -52,7 +52,6 @@ void Convert::find_match(const dictionary::Dictionary &dict) noexcept {
           break;
         }
       }
-
       // Convert the words if there are no overlap.
       if (!overlap) {
         auto value = match.get_value();
@@ -72,8 +71,8 @@ void Convert::find_match(const dictionary::Dictionary &dict) noexcept {
             std::less<types::MatchPosition>());
 }
 
-const std::string Convert::to_korean() const {
-  std::string output{m_input};
+const compat::string Convert::to_korean() const {
+  compat::string output{m_input};
 
   for (const auto &match_position : m_match_pos) {
     output.replace(match_position.get_pos(),
@@ -84,10 +83,10 @@ const std::string Convert::to_korean() const {
   return output;
 }
 
-const std::string Convert::to_korean_with_hanja(
-    const std::string &delimiter_start,
-    const std::string &delimiter_end) const {
-  std::string output{m_input};
+const compat::string Convert::to_korean_with_hanja(
+    const compat::string &delimiter_start,
+    const compat::string &delimiter_end) const {
+  compat::string output{m_input};
 
   std::size_t added_index = 0;
 

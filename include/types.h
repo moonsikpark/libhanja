@@ -3,10 +3,28 @@
 #define TYPES_H_
 
 #include <cstddef>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
 namespace hanja {
+
+namespace compat {
+#ifdef _WIN32
+using string = std::wstring;
+using ifstream = std::wifstream;
+using stringstream = std::wstringstream;
+using char_t = wchar_t;
+#else
+using string = std::string;
+using ifstream = std::ifstream;
+using stringstream = std::stringstream;
+using char_t = char;
+#endif
+}  // namespace compat
+
 namespace types {
 
 class Match {
@@ -17,12 +35,12 @@ class Match {
   Match(Match&& p) noexcept = default;
   Match& operator=(Match&& p) = default;
 
-  Match(const std::string& key, const std::string& value,
+  Match(const compat::string& key, const compat::string& value,
         const std::vector<std::size_t> pos);
 
-  inline const std::string& get_key() const { return m_key; }
+  inline const compat::string& get_key() const { return m_key; }
 
-  inline const std::string& get_value() const { return m_value; }
+  inline const compat::string& get_value() const { return m_value; }
 
   inline const std::vector<std::size_t>& get_pos() const { return m_pos; }
 
@@ -31,8 +49,8 @@ class Match {
   }
 
  private:
-  std::string m_key;
-  std::string m_value;
+  compat::string m_key;
+  compat::string m_value;
   std::vector<std::size_t> m_pos;
 };
 
@@ -44,18 +62,18 @@ class MatchPosition {
   MatchPosition(MatchPosition&& p) noexcept = default;
   MatchPosition& operator=(MatchPosition&& p) = default;
 
-  MatchPosition(const std::size_t pos, const std::string& value);
+  MatchPosition(const std::size_t pos, const compat::string& value);
 
   inline const std::size_t get_pos() const { return m_pos; }
 
-  inline const std::string& get_value() const { return m_value; }
+  inline const compat::string& get_value() const { return m_value; }
 
   inline auto operator<=>(const MatchPosition& other) const {
     return this->get_pos() <=> other.get_pos();
   }
 
  private:
-  std::string m_value;
+  compat::string m_value;
   std::size_t m_pos;
 };
 

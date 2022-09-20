@@ -4,11 +4,11 @@
 namespace hanja {
 namespace types {
 
-Match::Match(const std::string& key, const std::string& value,
+Match::Match(const compat::string& key, const compat::string& value,
              const std::vector<std::size_t> pos)
     : m_key(key), m_value(value), m_pos(pos) {}
 
-MatchPosition::MatchPosition(const std::size_t pos, const std::string& value)
+MatchPosition::MatchPosition(const std::size_t pos, const compat::string& value)
     : m_pos(pos), m_value(value) {}
 
 }  // namespace types

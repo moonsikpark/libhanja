@@ -50,23 +50,29 @@ void Convert::find_match(const dictionary::Dictionary &dict) noexcept {
   std::size_t current_pos = 0;
 
   for (const auto &match : m_match) {
+    // Look up the key in the sentence manually.
     auto key = match.get_key();
 
     compat::string::size_type pos = 0;
     while ((pos = m_input.find(key, pos)) != compat::string::npos) {
       bool overlap = false;
+
+      // Check whether the key overlaps with a longer key previously found.
       for (std::size_t idx = pos; idx < pos + key.length(); idx++) {
         if (m_match_changed[idx]) {
           overlap = true;
           break;
         }
       }
+
+      // No overlaps. We should replace this key with value.
       if (!overlap) {
-        // Write the positions we changed to the changed vector.
+        // Write the positions of the key we found to the changed vector.
         for (std::size_t idx = pos; idx < pos + key.length(); idx++) {
           m_match_changed[idx] = true;
         }
 
+        // Create MatchPosition with the position.
         m_match_pos.push_back(match.to_match_position(pos));
       }
       pos += key.size();
@@ -79,6 +85,7 @@ void Convert::find_match(const dictionary::Dictionary &dict) noexcept {
 }
 
 const compat::string Convert::to_korean() const {
+  // If we have no match, return the original string.
   if (m_match_pos.size() == 0) {
     return m_input;
   }
@@ -86,11 +93,15 @@ const compat::string Convert::to_korean() const {
   compat::stringstream ss;
   std::size_t current_pos = 0;
   for (const auto &match_position : m_match_pos) {
+    // Add a substring of current position ~ match position to the buffer
     ss << m_input.substr(current_pos, match_position.get_pos() - current_pos);
+    // Add key's value to the buffer
     ss << match_position.get_value();
+    // Update the current position
     current_pos = match_position.get_end_pos_original();
   }
 
+  // Add a substring of current position ~ end of input string to the buffer
   ss << m_input.substr(current_pos, m_input.length() - current_pos);
   return ss.str();
 }
@@ -105,14 +116,19 @@ const compat::string Convert::to_korean_with_hanja(
   compat::stringstream ss;
   std::size_t current_pos = 0;
   for (const auto &match_position : m_match_pos) {
+    // Add a substring of current position ~ match position to the buffer
     ss << m_input.substr(current_pos, match_position.get_pos() - current_pos);
+    // Add key's value to the buffer
     ss << match_position.get_value();
     ss << delimiter_start;
+    // Add key to the buffer
     ss << match_position.get_key();
     ss << delimiter_end;
+    // Update the current position
     current_pos = match_position.get_end_pos_original();
   }
 
+  // Add a substring of current position ~ end of input string to the buffer
   ss << m_input.substr(current_pos, m_input.length() - current_pos);
   return ss.str();
 }

@@ -4,6 +4,10 @@
 #include <fstream>
 #include <sstream>
 
+#ifdef _WIN32
+#include <locale>
+#endif
+
 namespace hanja {
 namespace dictionary {
 

@@ -36,7 +36,7 @@ void Dictionary::init(const compat::string& dictionary_path) noexcept {
   while (std::getline(fstream, line)) {
     compat::string key, value;
     // Skip comments or lines starting with whitespace.
-    if (line[0] == kDictionaryComment && line[0] == ' ') {
+    if (line[0] == kDictionaryComment || line[0] == ' ') {
       continue;
     }
 

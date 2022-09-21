@@ -27,10 +27,14 @@ class Convert {
 
   inline const compat::string input() const { return m_input; }
 
+  inline const std::vector<types::MatchPosition>& get_match_pos() const {
+    return m_match_pos;
+  }
+
  private:
   void find_match(const dictionary::Dictionary& dict) noexcept;
   const compat::string m_input;
-  std::vector<types::Match> m_match;
+  std::vector<dictionary::DictionaryItem> m_match;
   std::vector<bool> m_match_changed;
   std::vector<types::MatchPosition> m_match_pos;
 };

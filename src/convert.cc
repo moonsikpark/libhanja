@@ -33,12 +33,13 @@ void Convert::find_match(const dictionary::Dictionary &dict) noexcept {
     std::vector<std::size_t> results;
     tree.find_all(key, std::back_inserter(results));
     if (results.size() > 0) {
-      m_match.emplace_back(key, dict.query(key));
+      m_match.emplace_back(dict.query(key));
     }
   }
 
   // Sort by key descending.
-  std::sort(m_match.begin(), m_match.end(), std::greater<types::Match>());
+  std::sort(m_match.begin(), m_match.end(),
+            std::greater<dictionary::DictionaryItem>());
 
   /* Find MatchPositions using Match array and the input. We need the
    * m_match_changed vector because there are multiple matches that overlap and

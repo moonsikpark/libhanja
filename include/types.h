@@ -13,16 +13,13 @@ namespace hanja {
 
 namespace compat {
 #ifdef _WIN32
-using string = std::wstring;
-using ifstream = std::wifstream;
-using stringstream = std::wstringstream;
 using char_t = wchar_t;
 #else
-using string = std::string;
-using ifstream = std::ifstream;
-using stringstream = std::stringstream;
 using char_t = char;
 #endif
+using string = std::basic_string<char_t>;
+using ifstream = std::basic_ifstream<char_t>;
+using stringstream = std::basic_stringstream<char_t>;
 }  // namespace compat
 
 namespace types {

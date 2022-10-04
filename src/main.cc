@@ -32,7 +32,9 @@ int main() {
   hanja::compat::string path = "/root/libhanja/build/hanja.txt";
 #endif
 
-  hanja::dictionary::Dictionary dict(path);
+  hanja::dictionary::Dictionary dict;
+
+  dict.add_data(path);
 
   hanja::compat::string input;
   while (true) {

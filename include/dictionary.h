@@ -46,10 +46,11 @@ constexpr char kDictionaryComment = '#';
 
 class Dictionary {
  public:
-  Dictionary() = delete;
+  Dictionary() noexcept = default;
   Dictionary(const Dictionary&) = delete;
   Dictionary& operator=(const Dictionary&) = delete;
-  Dictionary(const compat::string& dictionary_path) noexcept;
+
+  void add_data(const compat::string& dictionary_path);
 
   // Warning: std::ranges are not compatable with pybind11.
   inline auto keys() const { return std::ranges::views::keys(m_data); }
@@ -62,8 +63,6 @@ class Dictionary {
   }
 
  private:
-  // TODO: support multiple dict
-  void init(const compat::string& dictionary_path) noexcept;
   // Note: Using unordered_map<string, string> speeds up about 4x.
   std::unordered_map<compat::string, DictionaryItem> m_data;
 };

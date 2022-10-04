@@ -14,7 +14,8 @@ PYBIND11_MODULE(pyhanja, m) {
                              &hanja::dictionary::DictionaryItem::get_value);
 
   py::class_<hanja::dictionary::Dictionary>(m, "Dictionary")
-      .def(py::init<const hanja::compat::string &>())
+      .def(py::init<>())
+      .def("add_data", &hanja::dictionary::Dictionary::add_data)
       .def("query", &hanja::dictionary::Dictionary::query)
       .def_property_readonly("size", &hanja::dictionary::Dictionary::size);
 

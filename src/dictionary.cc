@@ -15,11 +15,7 @@ DictionaryItem::DictionaryItem(const compat::string& key,
                                const compat::string& value) noexcept
     : m_key(key), m_value(value) {}
 
-Dictionary::Dictionary(const compat::string& dictionary_path) noexcept {
-  this->init(dictionary_path);
-}
-
-void Dictionary::init(const compat::string& dictionary_path) noexcept {
+void Dictionary::add_data(const compat::string& dictionary_path) {
 #ifdef _WIN32
   std::locale::global(std::locale(".UTF-8"));
 #endif

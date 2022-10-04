@@ -7,3 +7,6 @@
 [submodule "dependencies/args"]
 	path = dependencies/args
 	url = https://github.com/Taywee/args
+[submodule "dependencies/libhangul"]
+	path = dependencies/libhangul
+	url = https://github.com/libhangul/libhangul

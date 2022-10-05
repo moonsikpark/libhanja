@@ -46,11 +46,8 @@ constexpr char kDictionaryComment = '#';
 
 class Dictionary {
  public:
-  Dictionary() noexcept = default;
-  Dictionary(const Dictionary&) = delete;
-  Dictionary& operator=(const Dictionary&) = delete;
-
-  void add_data(const compat::string& dictionary_path);
+  Dictionary(const compat::string& dictionary_path, bool is_word_dict = false,
+             bool overwrite_matches = false) noexcept;
 
   // Warning: std::ranges are not compatable with pybind11.
   inline auto keys() const { return std::ranges::views::keys(m_data); }
@@ -63,8 +60,23 @@ class Dictionary {
   }
 
  private:
+  void add_data(const compat::string& dictionary_path) noexcept;
   // Note: Using unordered_map<string, string> speeds up about 4x.
   std::unordered_map<compat::string, DictionaryItem> m_data;
+  bool m_is_word_dict;
+  bool m_overwrite_matches;
+};
+
+class DictionaryPipeline {
+ public:
+  DictionaryPipeline() noexcept = default;
+  DictionaryPipeline(const DictionaryPipeline&) = delete;
+  DictionaryPipeline& operator=(const DictionaryPipeline&) = delete;
+
+  void add(const Dictionary& dict) { m_dictionary.push_back(dict); }
+
+ private:
+  std::vector<Dictionary> m_dictionary;
 };
 
 }  // namespace dictionary

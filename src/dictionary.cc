@@ -15,7 +15,13 @@ DictionaryItem::DictionaryItem(const compat::string& key,
                                const compat::string& value) noexcept
     : m_key(key), m_value(value) {}
 
-void Dictionary::add_data(const compat::string& dictionary_path) {
+Dictionary::Dictionary(const compat::string& dictionary_path, bool is_word_dict,
+                       bool overwrite_matches) noexcept
+    : m_is_word_dict(is_word_dict), m_overwrite_matches(overwrite_matches) {
+  this->add_data(dictionary_path);
+}
+
+void Dictionary::add_data(const compat::string& dictionary_path) noexcept {
 #ifdef _WIN32
   std::locale::global(std::locale(".UTF-8"));
 #endif

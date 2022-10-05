@@ -27,6 +27,8 @@ set(SOURCES
 )
 
 find_package(pybind11 CONFIG REQUIRED)
+FIND_PACKAGE(PythonInterp 3)
+FIND_PACKAGE(PythonLibs   3)
 
 add_executable(hanja src/main.cc ${SOURCES})
 

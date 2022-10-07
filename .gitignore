@@ -398,3 +398,14 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# scikit-build build files
+_skbuild/
+
+# Python distribution wheels
+dist/
+wheelhouse/
+
+# Python distribution informations
+
+*.egg-info/

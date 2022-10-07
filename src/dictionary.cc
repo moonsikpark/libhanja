@@ -15,7 +15,7 @@ DictionaryItem::DictionaryItem(const compat::string& key,
                                const compat::string& value) noexcept
     : m_key(key), m_value(value) {}
 
-void Dictionary::add_data(const compat::string& dictionary_path) {
+std::size_t Dictionary::add_data(const compat::string& dictionary_path) {
 #ifdef _WIN32
   std::locale::global(std::locale(".UTF-8"));
 #endif
@@ -28,6 +28,8 @@ void Dictionary::add_data(const compat::string& dictionary_path) {
   fstream.open(dictionary_path);
 
   compat::string line;
+
+  std::size_t count = 0;
 
   while (std::getline(fstream, line)) {
     compat::string key, value;
@@ -43,8 +45,11 @@ void Dictionary::add_data(const compat::string& dictionary_path) {
 
     if (!key.empty()) {
       m_data.emplace(key, DictionaryItem(key, value));
+      count++;
     }
   }
+
+  return count;
 }
 
 }  // namespace dictionary

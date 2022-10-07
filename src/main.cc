@@ -29,7 +29,8 @@ int main() {
   hanja::compat::string path =
       L"C:\\Users\\moonsik.park_estsoft\\Desktop\\hanja.txt";
 #else
-  hanja::compat::string path = "/root/libhanja/build/hanja.txt";
+  hanja::compat::string path =
+      "/home/moonsikpark/libhanja/dependencies/libhangul/data/hanja/hanja.txt";
 #endif
 
   hanja::dictionary::Dictionary dict;

@@ -26,13 +26,14 @@ set(SOURCES
         src/dictionary.cc
 )
 
-find_package(pybind11 CONFIG REQUIRED)
-FIND_PACKAGE(PythonInterp 3)
-FIND_PACKAGE(PythonLibs   3)
+#find_package(pybind11 CONFIG REQUIRED PATHS ${CMAKE_SOURCE_DIR}/dependencies/pybind11)
+FIND_PACKAGE(PythonInterp 3.6)
+FIND_PACKAGE(PythonLibs   3.6)
 
 add_executable(hanja src/main.cc ${SOURCES})
 
-pybind11_add_module(pyhanja src/pyhanja.cc ${SOURCES})
+pybind11_add_module(_pyhanja MODULE src/pyhanja.cc ${SOURCES})
 
-target_compile_definitions(pyhanja
-                           PRIVATE VERSION_INFO=${EXAMPLE_VERSION_INFO})
+target_compile_definitions(_pyhanja PRIVATE VERSION_INFO=${PROJECT_VERSION})
+
+install(TARGETS _pyhanja DESTINATION .)

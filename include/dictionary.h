@@ -50,7 +50,7 @@ class Dictionary {
   Dictionary(const Dictionary&) = delete;
   Dictionary& operator=(const Dictionary&) = delete;
 
-  void add_data(const compat::string& dictionary_path);
+  std::size_t add_data(const compat::string& dictionary_path);
 
   // Warning: std::ranges are not compatable with pybind11.
   inline auto keys() const { return std::ranges::views::keys(m_data); }

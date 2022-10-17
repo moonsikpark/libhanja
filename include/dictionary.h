@@ -50,21 +50,28 @@ class Dictionary {
   Dictionary(const Dictionary&) = delete;
   Dictionary& operator=(const Dictionary&) = delete;
 
-  std::size_t add_data(const compat::string& dictionary_path);
+  std::size_t add_data(bool is_word_dict,
+                       const compat::string& dictionary_path);
 
   // Warning: std::ranges are not compatable with pybind11.
-  inline auto keys() const { return std::ranges::views::keys(m_data); }
+  inline auto keys() const { return std::ranges::views::keys(m_word_dict); }
 
-  inline const std::size_t size() const { return m_data.size(); }
+  // Warning: std::ranges are not compatable with pybind11.
+  inline auto char_items() const {
+    return std::ranges::views::values(m_char_dict);
+  }
+
+  inline const std::size_t size() const { return m_word_dict.size(); }
 
   // TODO: handle exception when querying non-existant keys
   inline const DictionaryItem& query(const compat::string& key) const {
-    return m_data.at(key);
+    return m_word_dict.at(key);
   }
 
  private:
   // Note: Using unordered_map<string, string> speeds up about 4x.
-  std::unordered_map<compat::string, DictionaryItem> m_data;
+  std::unordered_map<compat::string, DictionaryItem> m_word_dict;
+  std::unordered_map<compat::string, DictionaryItem> m_char_dict;
 };
 
 }  // namespace dictionary

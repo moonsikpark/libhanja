@@ -2,6 +2,7 @@
 #include "convert.h"
 
 #include <algorithm>
+#include <regex>
 
 #include "dictionary.h"
 #include "step/suffix_tree.hpp"
@@ -12,7 +13,17 @@ namespace convert {
 Convert::Convert(const compat::string &input,
                  const dictionary::Dictionary &dict) noexcept
     : m_input(input), m_match_changed(input.length(), false) {
+  replace_char(dict);
   find_match(dict);
+}
+
+void Convert::replace_char(const dictionary::Dictionary &dict) noexcept {
+  for (const auto &item : dict.char_items()) {
+    for (auto at = m_input.find(item.get_key(), 0); at != std::string::npos;
+         at = m_input.find(item.get_key(), at + item.get_value().length())) {
+      m_input.replace(at, item.get_key().length(), item.get_value());
+    }
+  }
 }
 
 void Convert::find_match(const dictionary::Dictionary &dict) noexcept {

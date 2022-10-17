@@ -28,14 +28,19 @@ int main() {
   }
   hanja::compat::string path =
       L"C:\\Users\\moonsik.park_estsoft\\Desktop\\hanja.txt";
+  hanja::compat::string path_char =
+      L"C:\\Users\\moonsik.park_estsoft\\Desktop\\hanja.txt";
 #else
   hanja::compat::string path =
-      "/home/moonsikpark/libhanja/dependencies/libhangul/data/hanja/hanja.txt";
+      "/home/moonsikpark/libhanja/src/pyhanja/data/hanja.txt";
+  hanja::compat::string path_char =
+      "/home/moonsikpark/libhanja/src/pyhanja/data/ks_normalize.txt";
 #endif
 
   hanja::dictionary::Dictionary dict;
 
-  dict.add_data(path);
+  dict.add_data(true, path);
+  dict.add_data(false, path_char);
 
   hanja::compat::string input;
   while (true) {

@@ -15,7 +15,8 @@ DictionaryItem::DictionaryItem(const compat::string& key,
                                const compat::string& value) noexcept
     : m_key(key), m_value(value) {}
 
-std::size_t Dictionary::add_data(const compat::string& dictionary_path) {
+std::size_t Dictionary::add_data(bool is_word_dict,
+                                 const compat::string& dictionary_path) {
 #ifdef _WIN32
   std::locale::global(std::locale(".UTF-8"));
 #endif
@@ -44,7 +45,11 @@ std::size_t Dictionary::add_data(const compat::string& dictionary_path) {
     getline(ss, key, (compat::char_t)kDictionaryDelimiter);
 
     if (!key.empty()) {
-      m_data.emplace(key, DictionaryItem(key, value));
+      if (is_word_dict) {
+        m_word_dict.emplace(key, DictionaryItem(key, value));
+      } else {
+        m_char_dict.emplace(key, DictionaryItem(key, value));
+      }
       count++;
     }
   }

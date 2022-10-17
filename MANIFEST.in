@@ -1,1 +1,1 @@
-include src/pyhanja/data/hanja.txt
+include src/pyhanja/data/*.txt

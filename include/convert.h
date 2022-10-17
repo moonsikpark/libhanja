@@ -33,7 +33,8 @@ class Convert {
 
  private:
   void find_match(const dictionary::Dictionary& dict) noexcept;
-  const compat::string m_input;
+  void replace_char(const dictionary::Dictionary& dict) noexcept;
+  compat::string m_input;
   std::vector<dictionary::DictionaryItem> m_match;
   std::vector<bool> m_match_changed;
   std::vector<types::MatchPosition> m_match_pos;

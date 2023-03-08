@@ -2,7 +2,6 @@
 #ifndef DICTIONARY_H_
 #define DICTIONARY_H_
 
-#include <ranges>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -53,13 +52,10 @@ class Dictionary {
   std::size_t add_data(bool is_word_dict,
                        const compat::string& dictionary_path);
 
-  // Warning: std::ranges are not compatable with pybind11.
-  inline auto keys() const { return std::ranges::views::keys(m_word_dict); }
+  inline const auto& word_dict() const { return m_word_dict; }
 
-  // Warning: std::ranges are not compatable with pybind11.
-  inline auto char_items() const {
-    return std::ranges::views::values(m_char_dict);
-  }
+  inline const auto& char_dict() const { return m_char_dict; }
+
 
   inline const std::size_t size() const { return m_word_dict.size(); }
 

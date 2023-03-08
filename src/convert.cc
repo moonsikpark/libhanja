@@ -18,7 +18,7 @@ Convert::Convert(const compat::string &input,
 }
 
 void Convert::replace_char(const dictionary::Dictionary &dict) noexcept {
-  for (const auto &item : dict.char_items()) {
+  for (const auto& [key, item] : dict.char_dict()) {
     for (auto at = m_input.find(item.get_key(), 0); at != std::string::npos;
          at = m_input.find(item.get_key(), at + item.get_value().length())) {
       m_input.replace(at, item.get_key().length(), item.get_value());
@@ -40,7 +40,7 @@ void Convert::find_match(const dictionary::Dictionary &dict) noexcept {
    * To overcome this limitation, we should not rely on the position found here.
    * Instead, we should look up the key in the sentence manually.
    */
-  for (const auto &key : dict.keys()) {
+  for (const auto &[key, value] : dict.word_dict()) {
     std::vector<std::size_t> results;
     tree.find_all(key, std::back_inserter(results));
     if (results.size() > 0) {
@@ -59,7 +59,6 @@ void Convert::find_match(const dictionary::Dictionary &dict) noexcept {
    * For two matches "金:김" and "金屬:금속" for a word "金屬", we don't want
    * the both to apply their own pronunciations.
    */
-  std::size_t current_pos = 0;
 
   for (const auto &match : m_match) {
     // Look up the key in the sentence manually.

@@ -1,6 +1,6 @@
 // Copyright (c) 2022 ESTsoft Corp. All rights reserved.
-#ifndef TYPES_H_
-#define TYPES_H_
+#ifndef LIBHANJA_TYPES_H_
+#define LIBHANJA_TYPES_H_
 
 #include <cstddef>
 #include <fstream>
@@ -73,4 +73,4 @@ class MatchPosition {
 }  // namespace types
 }  // namespace hanja
 
-#endif  // TYPES_H_
+#endif  // LIBHANJA_TYPES_H_

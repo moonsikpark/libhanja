@@ -1,6 +1,6 @@
 // Copyright (c) 2022 ESTsoft Corp. All rights reserved.
-#ifndef CONVERT_H_
-#define CONVERT_H_
+#ifndef LIBHANJA_CONVERT_H_
+#define LIBHANJA_CONVERT_H_
 
 #include <string>
 #include <vector>
@@ -43,4 +43,4 @@ class Convert {
 }  // namespace convert
 }  // namespace hanja
 
-#endif  // CONVERT_H_
+#endif  // LIBHANJA_CONVERT_H_

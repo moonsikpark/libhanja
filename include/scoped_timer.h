@@ -1,6 +1,6 @@
 // Copyright (c) 2022 Moonsik Park.
-#ifndef NES_BASE_SCOPED_TIMER_
-#define NES_BASE_SCOPED_TIMER_
+#ifndef LIBHANJA_SCOPED_TIMER_
+#define LIBHANJA_SCOPED_TIMER_
 
 #include <chrono>
 
@@ -21,4 +21,4 @@ class ScopedTimer {
   std::chrono::time_point<clock> _start;
 };
 
-#endif  // NES_BASE_SCOPED_TIMER_
+#endif  // LIBHANJA_SCOPED_TIMER_

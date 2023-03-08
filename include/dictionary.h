@@ -1,6 +1,6 @@
 // Copyright (c) 2022 ESTsoft Corp. All rights reserved.
-#ifndef DICTIONARY_H_
-#define DICTIONARY_H_
+#ifndef LIBHANJA_DICTIONARY_H_
+#define LIBHANJA_DICTIONARY_H_
 
 #include <string>
 #include <unordered_map>
@@ -73,4 +73,4 @@ class Dictionary {
 }  // namespace dictionary
 }  // namespace hanja
 
-#endif  // DICTIONARY_H_
+#endif  // LIBHANJA_DICTIONARY_H_

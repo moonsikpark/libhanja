@@ -1,15 +1,15 @@
-from ._pyhanja import Dictionary, DictionaryItem, Convert, MatchPosition
+import importlib.resources
 
-from importlib import resources as _resources
+from ._pyhanja import Convert, Dictionary, DictionaryItem, MatchPosition
 
 _dict_file = None
 
 _normalize_char_file = None
 
-with _resources.path("pyhanja.data", "hanja.txt") as p:
+with importlib.resources.path("pyhanja.data", "hanja.txt") as p:
     _dict_file = str(p)
 
-with _resources.path("pyhanja.data", "ks_normalize.txt") as p:
+with importlib.resources.path("pyhanja.data", "ks_normalize.txt") as p:
     _normalize_char_file = str(p)
 
 

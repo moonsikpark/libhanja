@@ -1,26 +1,16 @@
-import sys
+from setuptools import Extension, setup
 
-try:
-    from skbuild import setup
-except ImportError:
-    print(
-        "Please update pip, you need pip 10 or greater,\n"
-        " or you need to install the PEP 518 requirements in pyproject.toml yourself",
-        file=sys.stderr,
+if __name__ == "__main__":
+    from pybind11.setup_helpers import Pybind11Extension
+
+    setup(
+        ext_modules=[
+            Pybind11Extension(
+                name="pyhanja._pyhanja",
+                sources=["src/convert.cc", "src/types.cc", "src/dictionary.cc", "src/pyhanja.cc"],
+                include_dirs=["include", "dependencies"],
+                extra_compile_args=["-std=c++20"],
+                language="c++"
+            ),
+        ]
     )
-    raise
-
-from setuptools import find_packages
-
-setup(
-    name="pyhanja",
-    use_scm_version=True,
-    description="Python binding to libhanja, a C++ library to convert Hanja to pronunciations commonly used in Korea.",
-    author="Moonsik Park",
-    license="LGPLv2",
-    packages=find_packages(where="src"),
-    package_dir={"": "src", "pyhanja.data": "src/pyhanja/data"},
-    cmake_install_dir="src/pyhanja",
-    include_package_data=True,
-    python_requires=">=3.6",
-)

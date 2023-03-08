@@ -1,1 +1,3 @@
-include src/pyhanja/data/*.txt
+recursive-include dependencies *
+recursive-include include *
+recursive-include src/pyhanja/data *

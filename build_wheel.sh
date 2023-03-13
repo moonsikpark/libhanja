@@ -8,7 +8,6 @@ rm -rf $SRCDIR/dist
 
 for dir in /opt/python/*/; do
     rm -rf $SRCDIR/_skbuild $SRCDIR/build $SRCDIR/pyhanja.egg-info
-    $dir/bin/python -m pip install setuptools pybind11 cmake scikit-build setuptools_scm[toml]
     $dir/bin/python $SRCDIR/setup.py bdist_wheel
 done
 

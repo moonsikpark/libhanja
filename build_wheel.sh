@@ -8,7 +8,7 @@ rm -rf $SRCDIR/dist
 
 for dir in /opt/python/*/; do
     rm -rf $SRCDIR/_skbuild $SRCDIR/build $SRCDIR/pyhanja.egg-info
-    $dir/bin/python $SRCDIR/setup.py bdist_wheel
+    $dir/bin/python -m build --wheel
 done
 
 for file in $SRCDIR/dist/*; do
